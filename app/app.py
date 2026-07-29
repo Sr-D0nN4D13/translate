@@ -1,6 +1,7 @@
 import flet as ft
 
 from app.core.config import APP_NAME
+from app.ui.layouts.main_layout import MainLayout
 
 
 class TranslateApp:
@@ -11,6 +12,8 @@ class TranslateApp:
 
         self.configure()
 
+        self.load_ui()
+
     def configure(self):
 
         self.page.title = APP_NAME
@@ -19,8 +22,23 @@ class TranslateApp:
 
         self.page.window.height = 850
 
-        self.page.theme_mode = ft.ThemeMode.SYSTEM
+        # Comenzaremos directamente en modo oscuro
+        self.page.theme_mode = ft.ThemeMode.DARK
 
         self.page.padding = 0
 
         self.page.spacing = 0
+
+        # Permitirá que la interfaz se adapte al tamaño de la ventana
+        self.page.window.min_width = 900
+        self.page.window.min_height = 600
+
+    def load_ui(self):
+
+        self.page.clean()
+
+        self.page.add(
+            MainLayout()
+        )
+
+        self.page.update()

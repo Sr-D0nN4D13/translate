@@ -1,0 +1,7 @@
+TITLE = 32
+
+SUBTITLE = 22
+
+BODY = 16
+
+SMALL = 14

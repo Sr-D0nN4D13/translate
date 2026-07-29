@@ -8,4 +8,4 @@ def main(page: ft.Page):
     TranslateApp(page)
 
 
-ft.app(target=main)
+ft.run(main)

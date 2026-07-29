@@ -1,0 +1,9 @@
+BUTTON = 14
+
+INPUT = 14
+
+CARD = 18
+
+PANEL = 20
+
+DIALOG = 18
