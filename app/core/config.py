@@ -1,12 +1,21 @@
-from pathlib import Path
+from dataclasses import dataclass
 
-APP_NAME = "Translate"
-APP_VERSION = "0.1.0"
 
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+@dataclass(frozen=True)
+class AppConfig:
 
-ASSETS_DIR = ROOT_DIR / "assets"
+    NAME = "Translate"
 
-MODELS_DIR = ROOT_DIR / "models"
+    VERSION = "0.1.0"
 
-DOCS_DIR = ROOT_DIR / "docs"
+    WINDOW_WIDTH = 1400
+
+    WINDOW_HEIGHT = 850
+
+    MIN_WIDTH = 1000
+
+    MIN_HEIGHT = 650
+
+    DEFAULT_THEME = "dark"
+
+    DEFAULT_LANGUAGE = "es"

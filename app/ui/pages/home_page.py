@@ -9,15 +9,35 @@ class HomePage(ft.Container):
 
             expand=True,
 
-            alignment=ft.Alignment(0, 0),
+            padding=40,
 
-            content=ft.Text(
+            content=ft.Column(
 
-                "Bienvenido a Translate",
+                alignment=ft.MainAxisAlignment.CENTER,
 
-                size=24,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
 
-                weight=ft.FontWeight.BOLD,
+                controls=[
+
+                    ft.Text(
+
+                        "Bienvenido a Translate",
+
+                        size=34,
+
+                        weight=ft.FontWeight.BOLD,
+
+                    ),
+
+                    ft.Text(
+
+                        "Sprint 1.1 funcionando correctamente",
+
+                        size=18,
+
+                    )
+
+                ]
 
             )
 

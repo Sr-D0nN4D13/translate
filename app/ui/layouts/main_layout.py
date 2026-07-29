@@ -1,13 +1,12 @@
-from app.ui.components.app_bar import AppBar
-
-from app.ui.pages.home_page import HomePage
-
 import flet as ft
+
+from app.ui.components.app_bar import AppBar
+from app.ui.pages.home_page import HomePage
 
 
 class MainLayout(ft.Column):
 
-    def __init__(self):
+    def __init__(self, page: ft.Page):
 
         super().__init__(
 
@@ -17,9 +16,9 @@ class MainLayout(ft.Column):
 
             controls=[
 
-                AppBar(),
+                AppBar(page),
 
-                HomePage()
+                HomePage(),
 
             ]
 
