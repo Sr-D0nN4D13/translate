@@ -12,7 +12,11 @@ class MainLayout(ft.Column):
         page: ft.Page,
         theme_manager: ThemeManager,
     ):
-        self.page = page
+        super().__init__(
+            expand=True,
+            spacing=0,
+        )
+        self._page = page
         self.theme_manager = theme_manager
         self.current_page = "texto"
         
@@ -20,18 +24,14 @@ class MainLayout(ft.Column):
         self.home_page = HomePage()
         self.translator_page = TranslatorPage(page)
         
-        super().__init__(
-            expand=True,
-            spacing=0,
-            controls=[
-                AppBar(
-                    page=page,
-                    theme_manager=theme_manager,
-                    on_navigate=self._on_navigate,
-                ),
-                self.translator_page,  # Mostrar traductor por defecto
-            ],
-        )
+        self.controls = [
+            AppBar(
+                page=page,
+                theme_manager=theme_manager,
+                on_navigate=self._on_navigate,
+            ),
+            self.translator_page,  # Mostrar traductor por defecto
+        ]
     
     def _on_navigate(self, mode: str):
         """Maneja la navegación entre diferentes modos"""
@@ -77,4 +77,4 @@ class MainLayout(ft.Column):
                 )
             )
         
-        self.page.update()
+        self._page.update()
