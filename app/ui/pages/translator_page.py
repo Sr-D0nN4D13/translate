@@ -8,7 +8,7 @@ from app.core.services.spell_checker import SpellCheckerService
 class TranslatorPage(ft.Container):
     def __init__(self, page: ft.Page):
         super().__init__()
-        self.page = page
+        self._page = page
         self.expand = True
         self.padding = 40
         
@@ -225,7 +225,7 @@ class TranslatorPage(ft.Container):
         self.source_text_field.value = target_text
         self.target_text_field.value = source_text
         
-        self.page.update()
+        self._page.update()
     
     def _on_text_change(self, e):
         """Maneja cambios en el texto (para traducción automática futura)"""
@@ -242,7 +242,7 @@ class TranslatorPage(ft.Container):
         # Mostrar indicador de carga
         self.loading_indicator.visible = True
         self.translate_btn.disabled = True
-        self.page.update()
+        self._page.update()
         
         try:
             # Cargar modelo si no está cargado
@@ -264,7 +264,7 @@ class TranslatorPage(ft.Container):
             # Ocultar indicador
             self.loading_indicator.visible = False
             self.translate_btn.disabled = False
-            self.page.update()
+            self._page.update()
     
     def _correct_spelling(self, e):
         """Corrige la ortografía del texto original"""
@@ -284,7 +284,7 @@ class TranslatorPage(ft.Container):
             corrected = self.spell_checker_es.correct(text)
         
         self.source_text_field.value = corrected
-        self.page.update()
+        self._page.update()
         
         self._show_snackbar("Texto corregido")
     
@@ -311,7 +311,7 @@ class TranslatorPage(ft.Container):
     def _copy_to_clipboard(self, text: str, btn: ft.ElevatedButton):
         """Copia texto al portapapeles y muestra animación en el botón"""
         # Copiar al portapapeles
-        self.page.set_clipboard(text)
+        self._page.set_clipboard(text)
         
         # Guardar contenido original del botón
         original_content = btn.content
@@ -326,19 +326,19 @@ class TranslatorPage(ft.Container):
             ]
         )
         btn.disabled = True
-        self.page.update()
+        self._page.update()
         
         # Restaurar después de 2 segundos
         def restore_button():
             btn.content = original_content
             btn.disabled = False
-            self.page.update()
+            self._page.update()
         
         # Programar restauración usando timer de Flet
-        self.page.overlay.append(
+        self._page.overlay.append(
             ft.Control()  # Placeholder
         )
-        self.page.update()
+        self._page.update()
         
         # Usar threading para el delay
         import threading
@@ -353,6 +353,6 @@ class TranslatorPage(ft.Container):
             content=ft.Text(message),
             behavior=ft.SnackBarBehavior.FLOATING,
         )
-        self.page.snack_bar = snackbar
+        self._page.snack_bar = snackbar
         snackbar.open = True
-        self.page.update()
+        self._page.update()
