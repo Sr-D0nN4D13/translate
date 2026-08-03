@@ -1,178 +1,38 @@
 ```
-# Python
-__pycache__/
+# Compiled Python files
 *.pyc
-*.pyo
-*.pyd
-.Python
-env/
+__pycache__/
+
+# Virtual environments
 venv/
 .venv/
-.venv*/
-.ENV
 .env
-.env.*
-.venv.bak/
-.venv*/
-*.env*
-.ENV/
+.env.local
+*.env.*
 
-# Build/dist
-build/
-dist/
-*.egg
-*.egg-info/
-.installed.cfg
-*.egg-info/
-.eggs/
-
-# Testing
-.coverage
-coverage/
-htmlcov/
-.pytest_cache/
-.hypothesis/
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
+# IDE specific
 .vscode/
 .idea/
 *.swp
 *.swo
-*.tmp
 
-# Dependencies
-.mypy_cache/
-.pyre/
-.pytype/
-.ipynb_checkpoints/
-
-# Environment specific
-.env.local
-.env.*
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-
-# Translations
-*.mo
-*.pot
-
-# Django
+# Logs
 *.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
 
-# Flask
-instance/
-.webassets-cache
-
-# Scrapy
-.scrapy
-
-# Sphinx
-docs/_build/
-
-# PyBuilder
+# Build/dist directories
+build/
+dist/
 target/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# PEP 582
-__pypackages__/
-
-# Celery
-celerybeat-schedule
-celerybeat.pid
-
-# Sage
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
+# Dependencies cache
+node_modules/
 .mypy_cache/
-.dmypy.json
-dmypy.json
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
-# Pyre
-.pyre/
-
-# pytype
-.pytype/
-
-# Cython
-*.so
-
-# Ruff
-.ruff_cache/
-
-# Black
-.black_cache/
-
-# Coverage
-.coverage*
+# System files
+.DS_Store
+Thumbs.db
 ```
