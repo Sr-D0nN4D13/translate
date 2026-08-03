@@ -9,7 +9,7 @@ class AppBar(ft.Container):
         page: ft.Page,
         theme_manager: ThemeManager,
     ):
-        self.page = page
+        self._page = page
         self.theme_manager = theme_manager
 
         super().__init__(
