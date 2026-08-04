@@ -59,16 +59,16 @@ class TranslatorPage(ft.Container):
             options=[ft.dropdown.Option(text=k, key=v) for k, v in self.languages.items()],
             value="es",
             expand=True,
-            on_change=self._on_language_change,
         )
+        self.source_dropdown.on_change = self._on_language_change
         
         self.target_dropdown = ft.Dropdown(
             label="Idioma destino",
             options=[ft.dropdown.Option(text=k, key=v) for k, v in self.languages.items()],
             value="en",
             expand=True,
-            on_change=self._on_language_change,
         )
+        self.target_dropdown.on_change = self._on_language_change
         
         # Botón de intercambio
         swap_btn = ft.IconButton(
