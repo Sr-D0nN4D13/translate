@@ -56,16 +56,16 @@ class TranslatorPage(ft.Container):
         # Dropdowns de idiomas
         self.source_dropdown = ft.Dropdown(
             label="Idioma origen",
-            options=[ft.dropdown.Option(k, v) for k, v in self.languages.items()],
-            value="Español",
+            options=[ft.dropdown.Option(text=k, key=v) for k, v in self.languages.items()],
+            value="es",
             expand=True,
             on_change=self._on_language_change,
         )
         
         self.target_dropdown = ft.Dropdown(
             label="Idioma destino",
-            options=[ft.dropdown.Option(k, v) for k, v in self.languages.items()],
-            value="English",
+            options=[ft.dropdown.Option(text=k, key=v) for k, v in self.languages.items()],
+            value="en",
             expand=True,
             on_change=self._on_language_change,
         )
@@ -180,9 +180,9 @@ class TranslatorPage(ft.Container):
     def _on_language_change(self, e):
         """Maneja el cambio de idioma"""
         if e.control == self.source_dropdown:
-            self.source_lang = self.languages[self.source_dropdown.value]
+            self.source_lang = e.data
         elif e.control == self.target_dropdown:
-            self.target_lang = self.languages[self.target_dropdown.value]
+            self.target_lang = e.data
     
     def _swap_languages(self, e):
         """Intercambia los idiomas origen y destino"""
@@ -190,11 +190,8 @@ class TranslatorPage(ft.Container):
         self.source_lang, self.target_lang = self.target_lang, self.source_lang
         
         # Actualizar dropdowns
-        source_name = [k for k, v in self.languages.items() if v == self.source_lang][0]
-        target_name = [k for k, v in self.languages.items() if v == self.target_lang][0]
-        
-        self.source_dropdown.value = source_name
-        self.target_dropdown.value = target_name
+        self.source_dropdown.value = self.source_lang
+        self.target_dropdown.value = self.target_lang
         
         # Intercambiar textos
         source_text = self.source_text_field.value
