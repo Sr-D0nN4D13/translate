@@ -125,9 +125,9 @@ class TranslatorPage(ft.Container):
         
         # Indicador de carga
         self.loading_indicator = ft.ProgressBar(
-            indeterminate=True,
             visible=False,
         )
+        self.loading_indicator.indeterminate = True
         
         # Ensamblar UI
         self.content = ft.Column(
