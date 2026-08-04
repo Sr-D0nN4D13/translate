@@ -20,6 +20,7 @@ class TranslatorPage(ft.Container):
         # Idiomas
         self.source_lang = "es"
         self.target_lang = "en"
+        self.auto_correct_enabled = True
         
         # Lista de idiomas disponibles
         self.languages = {
@@ -44,8 +45,8 @@ class TranslatorPage(ft.Container):
         self.target_dropdown = None
         self.copy_source_btn = None
         self.copy_target_btn = None
-        self.translate_btn = None
         self.loading_indicator = None
+        self.last_corrected_text = ""
         
         self._build_ui()
     
@@ -76,9 +77,9 @@ class TranslatorPage(ft.Container):
             on_click=self._swap_languages,
         )
         
-        # Campo de texto origen
+        # Campo de texto origen con corrección y traducción automática
         self.source_text_field = ft.TextField(
-            label="Texto a traducir",
+            label="Texto a traducir (corrección y traducción automática)",
             multiline=True,
             min_lines=8,
             max_lines=12,
@@ -128,19 +129,6 @@ class TranslatorPage(ft.Container):
             visible=False,
         )
         
-        # Botones de acción
-        self.correct_btn = ft.ElevatedButton(
-            "Corregir ortografía",
-            icon=ft.Icons.SPELLCHECK,
-            on_click=self._correct_spelling,
-        )
-        
-        self.translate_btn = ft.FilledButton(
-            "Traducir",
-            icon=ft.Icons.TRANSLATE,
-            on_click=self._translate_text,
-        )
-        
         # Ensamblar UI
         self.content = ft.Column(
             controls=[
@@ -172,16 +160,6 @@ class TranslatorPage(ft.Container):
                 
                 # Indicador de carga
                 self.loading_indicator,
-                
-                # Botones de acción
-                ft.Row(
-                    alignment=ft.MainAxisAlignment.CENTER,
-                    spacing=20,
-                    controls=[
-                        self.correct_btn,
-                        self.translate_btn,
-                    ],
-                ),
                 
                 ft.Divider(height=20),
                 
@@ -228,20 +206,42 @@ class TranslatorPage(ft.Container):
         self._page.update()
     
     def _on_text_change(self, e):
-        """Maneja cambios en el texto (para traducción automática futura)"""
-        pass
-    
-    def _translate_text(self, e):
-        """Realiza la traducción del texto"""
+        """Maneja cambios en el texto con corrección y traducción automática"""
         text = self.source_text_field.value
         
         if not text.strip():
-            self._show_snackbar("Ingresa un texto para traducir")
+            self.target_text_field.value = ""
+            self._page.update()
             return
         
+        # Evitar procesamiento si el texto es muy corto (menos de 3 caracteres)
+        if len(text.strip()) < 3:
+            return
+        
+        # Evitar bucles infinitos si el texto ya fue corregido recientemente
+        if text == self.last_corrected_text:
+            return
+        
+        # Aplicar corrección ortográfica automática si está habilitada
+        if self.auto_correct_enabled:
+            if self.source_lang in ['es', 'en']:
+                spell_checker = self.spell_checker_es if self.source_lang == 'es' else self.spell_checker_en
+                corrected_text = spell_checker.correct(text)
+                
+                # Solo actualizar si hay cambios significativos
+                if corrected_text != text:
+                    self.last_corrected_text = corrected_text
+                    self.source_text_field.value = corrected_text
+                    text = corrected_text
+                    # No llamamos a update() aquí para evitar flickering, lo haremos después de traducir
+        
+        # Traducir automáticamente
+        self._translate_automatically(text)
+    
+    def _translate_automatically(self, text: str):
+        """Realiza la traducción automática del texto"""
         # Mostrar indicador de carga
         self.loading_indicator.visible = True
-        self.translate_btn.disabled = True
         self._page.update()
         
         try:
@@ -259,34 +259,12 @@ class TranslatorPage(ft.Container):
             self.target_text_field.value = translation
             
         except Exception as ex:
-            self._show_snackbar(f"Error en traducción: {str(ex)}")
+            # Silenciar errores en traducción automática para no molestar al usuario
+            pass
         finally:
             # Ocultar indicador
             self.loading_indicator.visible = False
-            self.translate_btn.disabled = False
             self._page.update()
-    
-    def _correct_spelling(self, e):
-        """Corrige la ortografía del texto original"""
-        text = self.source_text_field.value
-        
-        if not text.strip():
-            self._show_snackbar("Ingresa un texto para corregir")
-            return
-        
-        # Usar corrector según idioma origen
-        if self.source_lang == 'es':
-            corrected = self.spell_checker_es.correct(text)
-        elif self.source_lang == 'en':
-            corrected = self.spell_checker_en.correct(text)
-        else:
-            # Para otros idiomas usar español por defecto
-            corrected = self.spell_checker_es.correct(text)
-        
-        self.source_text_field.value = corrected
-        self._page.update()
-        
-        self._show_snackbar("Texto corregido")
     
     def _copy_source_text(self, e):
         """Copia el texto original al portapapeles con animación"""
