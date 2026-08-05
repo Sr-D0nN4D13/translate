@@ -4,7 +4,6 @@ from app.core.config import AppConfig
 from app.core.managers.theme_manager import ThemeManager
 from app.ui.layouts.main_layout import MainLayout
 
-
 class TranslateApp:
     def __init__(self, page: ft.Page):
         self.page = page
